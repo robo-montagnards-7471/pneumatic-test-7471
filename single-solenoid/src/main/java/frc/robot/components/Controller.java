@@ -1,0 +1,69 @@
+package frc.robot.components;
+
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.data.StickPosition;
+import frc.robot.Config;
+
+public class Controller {
+    final private static XboxController xbox_controller = new XboxController( 0 );
+    // private double last_right_bumper_state;
+    // private double last_left_bumper_state;
+    
+    public Controller() {
+        // last_right_bumper_state = xbox_controller.getRightTriggerAxis();
+        // last_left_bumper_state = xbox_controller.getLeftTriggerAxis();
+    }
+
+    public XboxController getController() {
+        return new XboxController( xbox_controller.getPort() );
+    }
+    public CommandXboxController getCommandController() {
+        return new CommandXboxController( xbox_controller.getPort() );
+    }
+
+    public StickPosition getLeftStickPosition() {
+        return new StickPosition( xbox_controller.getLeftX(), xbox_controller.getLeftY() );
+    }
+
+    public StickPosition getRightStickPosition() {
+        return new StickPosition( xbox_controller.getRightX(), xbox_controller.getRightY() );
+    }
+
+
+    public void poll() {
+        SmartDashboard.putNumber("Left Joystick X", xbox_controller.getLeftX());
+        SmartDashboard.putNumber("Left Joystick Y", xbox_controller.getLeftY()*-1);
+        SmartDashboard.putNumber("Right Joystick X", xbox_controller.getRightX());
+        SmartDashboard.putNumber("Right Joystick Y", xbox_controller.getRightY()*-1);
+        // double modifier = xbox_controller.getRightX()*-Config.rotation_speed;
+
+        // BigDecimal bd = new BigDecimal(Double.toString(modifier));
+        // bd = bd.setScale(1, RoundingMode.HALF_UP);
+        // double rounded_modifier = bd.doubleValue();
+        
+        // SmartDashboard.putNumber("Swerve angle", swerve_angle);
+        // SmartDashboard.putNumber("Modifier", rounded_modifier);
+        
+        // swerve_angle += rounded_modifier;
+        // if( swerve_angle > 1 ) {
+        //     swerve_angle = -1;
+        // }
+        // else if( swerve_angle < -1 ) {
+        //     swerve_angle = 1;
+        // }
+    }
+
+    public boolean toggleForward() {
+        return xbox_controller.getAButtonPressed();
+    }
+
+    public boolean toggleBackward() {
+        return xbox_controller.getBButtonPressed();
+    }
+
+    public boolean toggleCompressor() {
+        return xbox_controller.getYButtonPressed();
+    }
+}
